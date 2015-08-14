@@ -1,32 +1,73 @@
 var canvasSize=700;
-var initialGrid=16;
-var borderPixels=initialGrid;
-var cellDimension =(canvasSize-initialGrid)/initialGrid;
 
 
 $(document).ready(function(){
+	gridSize=16;
 
-	createGrid();
+	createGrid(gridSize);
 
-	$('.cell').mouseenter(function() {
-		$(this).addClass("fill-solid");
+	$('#clearBtn').click(function() {
+		gridSize = prompt ("Enter number of squares per side","16");
+		clearGrid(gridSize);
 	});
 
+	$('#color-fill').click(function(){
+		clearGrid(gridSize);
+		drawmode = "color"
+	});
+
+	$('#airbrush').click(function(){
+		clearGrid(gridSize);
+		$('div.cell').addClass("airbrush");
+		drawmode = "airbrush"
+	});
 });
 
-function createGrid () {
 
-	//$(".wrapper").css("width",16*26)
-	console.log(cellDimension)
-	for (var i = 0; i < initialGrid; i++) {
-		for (var j = 0; j < initialGrid; j++){
-			$('.wrapper').append('<div class="cell"></div>');
-		};
-		//$('.wrapper').append('<div class="clear"></div>');
+function createGrid(gSize) {
+
+	drawmode = "fill";
+
+	var cellDimension =(canvasSize - 0)/gSize;
+	var totalCells=gSize*gSize;
+	
+	for (var j = 0; j < totalCells; j++){
+		$('.wrapper').append('<div class="cell"></div>');
 	};
 
-	$('.cell').css("width",cellDimension);
-	$('.cell').css("height",cellDimension);
+	$('.cell').width(cellDimension).height(cellDimension);
+
+	$('.cell').mouseenter(function() {
+		fillSquare($(this));
+	});
 }
 
+function fillSquare(caller) {
+	switch(drawmode) {
+		case "fill":
+			caller.addClass("fill-solid");
+			break;
+		case "color":
+			caller.css("background-color",randColor());
+			break;
+		case "airbrush":
+			currentOpacity = Number(caller.css("opacity"));
+			if(currentOpacity < 1) {
+				caller.css("opacity",currentOpacity + 0.1);
+			}
+			break;
 
+	}
+}
+
+function randColor(){
+	r=Math.floor(Math.random()*255);
+	g=Math.floor(Math.random()*255);
+	b=Math.floor(Math.random()*255);
+	return "rgb("+r+","+g+","+b+")";
+}
+
+function clearGrid(newGrid) {
+	$('.cell').remove();
+	createGrid(newGrid);
+}

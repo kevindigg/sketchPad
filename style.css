@@ -1,34 +1,49 @@
+body {
+	margin: 0;
+	padding: 0;
+}
+
+.menu {
+	width: 100;
+	margin-left: 20;
+	float: left;
+}
+
 .wrapper {
 	width: 700px;
 	/*height: 700px;*/
 
-	margin-top: 30px ;
+	margin-top: 20px ;
 	margin-left: auto;
 	margin-right: auto;
 
 	border-style: solid;
-	border-color: #ddd;
-	border-width: 0 0 0 1;
+	border-color: black;
+	border-width: 1;
 
 	padding: 0;
 
 }
 
 .cell {
-	border-style: solid;
+/*	border-style: solid;
 	border-color: #ddd;
-	border-width: 1 1 1 0;
+	border-width: 1 1 1 0;*/
 
 	/*float: left;*/
 	display:inline-block;
 }
 
 .wrapper .clear {
-
 	clear: both;
 }
 
-.fill-solid {
 
+.fill-solid {
 	background-color: #444;
+}
+
+.airbrush {
+	background-color: black;
+	opacity: 0;
 }
